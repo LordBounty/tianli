@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="贵阳天力工贸有限公司信息化管理平台" />
+    <title>数智天力协同管理平台</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <svg class="svg-sprite" aria-hidden="true">
+      <symbol id="i-logo" viewBox="0 0 24 24"><path d="M4 18V9l8-5 8 5v9l-8 3-8-3Z"/><path d="M8 16v-5l4-2 4 2v5l-4 1.5L8 16Z"/></symbol>
+      <symbol id="i-plan" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M8 14h3M8 17h6"/></symbol>
+      <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L20 8H6"/><circle cx="10" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></symbol>
+      <symbol id="i-quality" viewBox="0 0 24 24"><path d="m12 3 7 3v5c0 4.6-2.8 8.2-7 10-4.2-1.8-7-5.4-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v11H3zM14 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
+      <symbol id="i-task" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 8 1.5 1.5L12 7M14 9h3M8 14l1.5 1.5L12 13M14 15h3"/></symbol>
+      <symbol id="i-performance" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+      <symbol id="i-report" viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-6M22 19H2"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
+      <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H3v-4h.2a1.7 1.7 0 0 0 1.4-1A1.7 1.7 0 0 0 4.3 7l-.1-.1L7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V3h4v.2a1.7 1.7 0 0 0 1 1.4 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+      <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 7v5l-4 2v-7L4 5Z"/></symbol>
+      <symbol id="i-sort" viewBox="0 0 24 24"><path d="M8 6h10M8 12h7M8 18h4M4 4v16m0 0-2-2m2 2 2-2"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2 5M20 4v7h-7"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+      <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+      <symbol id="i-empty" viewBox="0 0 64 64"><rect x="10" y="14" width="44" height="38" rx="5"/><path d="M18 24h28M18 33h17M18 42h22"/><circle cx="48" cy="47" r="10"/><path d="m44 47 3 3 5-6"/></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m0 0-4 4m4-4 4 4M5 14v5h14v-5"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></symbol>
+    </svg>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark"><svg><use href="#i-logo"></use></svg></span>
+          <div>
+            <strong>贵阳天力工贸有限公司</strong>
+            <span>信息化管理平台</span>
+          </div>
+        </div>
+        <button class="user-menu" id="userMenu" type="button" aria-expanded="false">
+          <span class="avatar"><svg><use href="#i-user"></use></svg></span>
+          <span class="user-copy"><small>高层管理者</small><strong>黄*</strong></span>
+          <svg class="user-arrow"><use href="#i-chevron"></use></svg>
+        </button>
+        <div class="account-popover" id="accountPopover" hidden>
+          <div class="account-summary"><span class="avatar large"><svg><use href="#i-user"></use></svg></span><div><strong>黄*</strong><span>高层管理者 · 全部权限</span></div></div>
+          <button type="button" data-toast="账户管理功能将在正式版开放">账户管理</button>
+          <button type="button" data-toast="当前账号由统一身份认证管理">退出登录</button>
+        </div>
+      </header>
+
+      <aside class="sidebar">
+        <div class="sidebar-label">业务管理</div>
+        <nav id="mainNav" aria-label="主导航">
+          <button class="nav-item active" type="button" data-page="operations"><svg><use href="#i-plan"></use></svg><span>生产经营计划</span></button>
+          <button class="nav-item" type="button" data-page="procurement"><svg><use href="#i-cart"></use></svg><span>采购计划管理</span></button>
+          <button class="nav-item" type="button" data-page="quality"><svg><use href="#i-quality"></use></svg><span>产品质量管理</span></button>
+          <button class="nav-item placeholder" type="button" data-label="物流管理"><svg><use href="#i-truck"></use></svg><span>物流管理</span></button>
+          <button class="nav-item placeholder" type="button" data-label="通知公告"><svg><use href="#i-bell"></use></svg><span>通知公告</span><b class="nav-badge">3</b></button>
+          <button class="nav-item placeholder" type="button" data-label="任务与待办"><svg><use href="#i-task"></use></svg><span>任务与待办</span></button>
+          <button class="nav-item placeholder" type="button" data-label="绩效考核"><svg><use href="#i-performance"></use></svg><span>绩效考核</span></button>
+          <button class="nav-item placeholder" type="button" data-label="数据统计与报表"><svg><use href="#i-report"></use></svg><span>数据统计与报表</span></button>
+          <button class="nav-item placeholder" type="button" data-label="权限管理"><svg><use href="#i-lock"></use></svg><span>权限管理</span></button>
+          <button class="nav-item placeholder" type="button" data-label="系统设置"><svg><use href="#i-settings"></use></svg><span>系统设置</span></button>
+        </nav>
+        <div class="sidebar-footer">
+          <span>数智天力协同管理平台</span>
+          <small>系统版本 V1.65</small>
+        </div>
+      </aside>
+
+      <main class="content" id="mainContent">
+        <div class="page-heading">
+          <div>
+            <div class="breadcrumb"><span>业务管理</span><svg><use href="#i-chevron"></use></svg><strong id="breadcrumbCurrent">生产经营计划</strong></div>
+            <h1 id="pageTitle">生产经营计划</h1>
+            <p id="pageDescription">围绕客户需求编制经营计划，跟踪计划量与交付进度。</p>
+          </div>
+          <div class="page-meta">
+            <span class="sync-dot"></span>
+            <div><small>数据状态</small><strong>数据已同步</strong></div>
+          </div>
+        </div>
+
+        <section class="procurement-switcher" id="procurementSwitcher" hidden>
+          <button type="button" data-procurement-type="emergency"><span class="switch-icon urgent">急</span><span><strong>应急采购</strong><small>紧急需求快速响应</small></span><svg><use href="#i-chevron"></use></svg></button>
+          <button class="selected" type="button" data-procurement-type="regular"><span class="switch-icon">常</span><span><strong>常规采购</strong><small>按计划执行采购安排</small></span><svg><use href="#i-chevron"></use></svg></button>
+        </section>
+
+        <section class="workspace-card">
+          <div class="card-intro">
+            <div>
+              <div class="section-kicker" id="sectionKicker">计划工作表</div>
+              <h2 id="tableTitle">经营计划明细</h2>
+              <p id="tableHint">统一维护客户需求、计划量、交付日期和执行状态。</p>
+            </div>
+            <button class="btn btn-add" id="addRecord" type="button"><svg><use href="#i-plus"></use></svg>新增记录</button>
+          </div>
+
+          <div class="category-row" id="categoryRow">
+            <span>产品分类</span>
+            <button class="chip active" type="button" data-category="柠檬酸">柠檬酸</button>
+            <button class="chip" type="button" data-category="食品添加剂">食品添加剂</button>
+            <button class="chip" type="button" data-category="化工原料">化工原料</button>
+            <button class="chip" type="button" data-category="全部">全部</button>
+          </div>
+
+          <div class="toolbar">
+            <label class="search-box">
+              <svg><use href="#i-search"></use></svg>
+              <input id="searchInput" type="search" placeholder="搜索产品名称或需求方" autocomplete="off" />
+              <button id="searchButton" type="button">检索</button>
+            </label>
+            <div class="toolbar-actions">
+              <button class="btn" id="filterButton" type="button"><svg><use href="#i-filter"></use></svg>条件筛选</button>
+              <button class="btn" id="sortButton" type="button"><svg><use href="#i-sort"></use></svg>交付日期排序</button>
+              <button class="btn icon-only" id="resetButton" type="button" aria-label="清空当前工作表" title="清空当前工作表"><svg><use href="#i-refresh"></use></svg></button>
+            </div>
+          </div>
+
+          <div class="filter-panel" id="filterPanel" hidden>
+            <label>状态<select id="statusFilter"><option value="">全部状态</option></select></label>
+            <label>日期范围<input id="dateFrom" type="date" /><span>至</span><input id="dateTo" type="date" /></label>
+            <button class="btn" id="clearFilters" type="button">清除条件</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead id="tableHead"></thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="table-footer">
+            <span id="recordCount">共 0 条记录</span>
+            <div class="pagination"><button type="button" disabled>上一页</button><button class="current" type="button">1</button><button type="button" disabled>下一页</button></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="recordModal" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <header><div><span class="modal-kicker" id="modalKicker">生产经营计划</span><h2 id="modalTitle">新增记录</h2></div><button class="modal-close" type="button" data-close-modal aria-label="关闭"><svg><use href="#i-close"></use></svg></button></header>
+        <form id="recordForm">
+          <div class="form-grid" id="formFields"></div>
+          <footer><span>带 <b>*</b> 为必填项，请确认信息准确后保存。</span><div><button class="btn" type="button" data-close-modal>取消</button><button class="btn btn-confirm" type="submit">保存记录</button></div></footer>
+        </form>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="detailModal" hidden>
+      <section class="modal detail-modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+        <header><div><span class="modal-kicker">生产批次档案</span><h2 id="detailTitle">生产详情</h2></div><button class="modal-close" type="button" data-close-detail aria-label="关闭"><svg><use href="#i-close"></use></svg></button></header>
+        <div class="detail-content">
+          <div class="detail-toolbar"><p>维护产品对应的生产批次与原材料追溯信息。</p><button class="btn" id="addBatch" type="button"><svg><use href="#i-plus"></use></svg>添加批次</button></div>
+          <div class="table-wrap nested"><table><thead><tr><th>生产时间</th><th>生产批次</th><th>机台班次</th><th>原材料批次</th><th>操作</th></tr></thead><tbody id="batchBody"></tbody></table></div>
+          <div class="inline-batch-form" id="batchForm" hidden>
+            <input type="datetime-local" name="productionTime" aria-label="生产时间" />
+            <input type="text" name="batchNo" placeholder="生产批次" />
+            <input type="text" name="machineShift" placeholder="机台班次" />
+            <input type="text" name="materialBatch" placeholder="原材料批次" />
+            <button class="btn" id="saveBatch" type="button">保存</button>
+          </div>
+        </div>
+        <footer class="modal-footer"><button class="btn" type="button" data-close-detail>完成</button></footer>
+      </section>
+    </div>
+
+    <div class="confirm-popover" id="confirmPopover" hidden>
+      <strong id="confirmTitle">确认删除这条记录？</strong>
+      <p id="confirmText">删除后无法恢复。</p>
+      <div><button class="btn" id="cancelConfirm" type="button">取消</button><button class="btn danger" id="acceptConfirm" type="button">确认删除</button></div>
+    </div>
+
+    <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+    <script src="app.js" defer></script>
+  </body>
+</html>
