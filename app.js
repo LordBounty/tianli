@@ -353,8 +353,8 @@
     input.addEventListener("change", () => {
       const file = input.files?.[0];
       if (!file) return;
-      if (file.size > 1_500_000) {
-        showToast("图片请控制在 1.5MB 以内", "info");
+      if (file.size > 3_500_000) {
+        showToast("图片请控制在 3.5MB 以内", "info");
         input.value = "";
         return;
       }
