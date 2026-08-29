@@ -63,7 +63,6 @@
         { key: "status", label: "采购状态", type: "select", required: true, options: ["待计划", "执行中", "已交付", "已延期"] },
       ],
       columns: [
-        { key: "favorite", label: "收藏", action: "favorite" },
         { key: "categoryName", label: "品类名称" },
         { key: "spec", label: "规格" },
         { key: "quantity", label: "数量（吨）", format: (v) => v ? `${v} 吨` : "—" },
