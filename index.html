@@ -93,7 +93,12 @@
           <button class="selected" type="button" data-procurement-type="regular"><span class="switch-icon">常</span><span><strong>常规采购</strong><small>按计划执行采购安排</small></span><svg><use href="#i-chevron"></use></svg></button>
         </section>
 
-        <section class="workspace-card">
+        <section class="quality-switcher" id="qualitySwitcher" hidden>
+          <button type="button" data-quality-type="report"><span class="switch-icon report">报</span><span><strong>产品检测报告</strong><small>查看产品检测报告档案</small></span><svg><use href="#i-chevron"></use></svg></button>
+          <button type="button" data-quality-type="trace"><span class="switch-icon trace">溯</span><span><strong>产品质量追溯</strong><small>按生产批次查询追溯信息</small></span><svg><use href="#i-chevron"></use></svg></button>
+        </section>
+
+        <section class="workspace-card" id="workspaceCard">
           <div class="card-intro">
             <div>
               <div class="section-kicker" id="sectionKicker">计划工作表</div>
@@ -112,12 +117,13 @@
           </div>
 
           <div class="toolbar">
-            <label class="search-box">
+            <label class="search-box" id="searchBox">
+              <span class="search-prefix" id="searchPrefix" hidden>产品生产批次</span>
               <svg><use href="#i-search"></use></svg>
               <input id="searchInput" type="search" placeholder="搜索产品名称或需求方" autocomplete="off" />
-              <button id="searchButton" type="button">检索</button>
+              <button id="searchButton" type="button">查询</button>
             </label>
-            <div class="toolbar-actions">
+            <div class="toolbar-actions" id="toolbarActions">
               <button class="btn" id="filterButton" type="button"><svg><use href="#i-filter"></use></svg>条件筛选</button>
               <button class="btn" id="sortButton" type="button"><svg><use href="#i-sort"></use></svg>交付日期排序</button>
               <button class="btn icon-only" id="resetButton" type="button" aria-label="清空当前工作表" title="清空当前工作表"><svg><use href="#i-refresh"></use></svg></button>
@@ -152,24 +158,6 @@
           <div class="form-grid" id="formFields"></div>
           <footer><span>带 <b>*</b> 为必填项，请确认信息准确后保存。</span><div><button class="btn" type="button" data-close-modal>取消</button><button class="btn btn-confirm" type="submit">保存记录</button></div></footer>
         </form>
-      </section>
-    </div>
-
-    <div class="modal-backdrop" id="detailModal" hidden>
-      <section class="modal detail-modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
-        <header><div><span class="modal-kicker">生产批次档案</span><h2 id="detailTitle">生产详情</h2></div><button class="modal-close" type="button" data-close-detail aria-label="关闭"><svg><use href="#i-close"></use></svg></button></header>
-        <div class="detail-content">
-          <div class="detail-toolbar"><p>维护产品对应的生产批次与原材料追溯信息。</p><button class="btn" id="addBatch" type="button"><svg><use href="#i-plus"></use></svg>添加批次</button></div>
-          <div class="table-wrap nested"><table><thead><tr><th>生产时间</th><th>生产批次</th><th>机台班次</th><th>原材料批次</th><th>操作</th></tr></thead><tbody id="batchBody"></tbody></table></div>
-          <div class="inline-batch-form" id="batchForm" hidden>
-            <input type="datetime-local" name="productionTime" aria-label="生产时间" />
-            <input type="text" name="batchNo" placeholder="生产批次" />
-            <input type="text" name="machineShift" placeholder="机台班次" />
-            <input type="text" name="materialBatch" placeholder="原材料批次" />
-            <button class="btn" id="saveBatch" type="button">保存</button>
-          </div>
-        </div>
-        <footer class="modal-footer"><button class="btn" type="button" data-close-detail>完成</button></footer>
       </section>
     </div>
 
