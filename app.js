@@ -54,8 +54,8 @@
       fields: [
         { key: "categoryName", label: "品类名称", required: true, placeholder: "请输入采购品类" },
         { key: "spec", label: "规格", required: true, placeholder: "例如：25kg/袋" },
-        { key: "quantity", label: "数量", type: "number", required: true, placeholder: "请输入数量", min: "0" },
-        { key: "unitPrice", label: "单价（元）", type: "number", required: true, placeholder: "请输入含税单价", min: "0", step: "0.01" },
+        { key: "quantity", label: "数量（吨）", type: "number", required: true, placeholder: "请输入数量（吨）", min: "0" },
+        { key: "unitPrice", label: "单价（元/吨）", type: "number", required: true, placeholder: "请输入含税单价", min: "0", step: "0.01" },
         { key: "paymentMethod", label: "付款方式", type: "select", required: true, options: ["现款现货", "账期 30 天", "预付 30%", "分批结算"] },
         { key: "manufacturer", label: "生产厂家", required: true, placeholder: "请输入生产厂家" },
         { key: "arrivalDeadline", label: "要求到货期限", type: "date", required: true },
@@ -66,9 +66,9 @@
         { key: "favorite", label: "收藏", action: "favorite" },
         { key: "categoryName", label: "品类名称" },
         { key: "spec", label: "规格" },
-        { key: "quantity", label: "数量" },
-        { key: "unitPrice", label: "单价", format: formatCurrency },
-        { key: "totalAmount", label: "合计金额", format: formatCurrency },
+        { key: "quantity", label: "数量（吨）", format: (v) => v ? `${v} 吨` : "—" },
+        { key: "unitPrice", label: "单价（元/吨）", format: formatCurrency },
+        { key: "totalAmount", label: "合计金额（元）", format: formatCurrency },
         { key: "paymentMethod", label: "付款方式" },
         { key: "manufacturer", label: "生产厂家" },
         { key: "arrivalDeadline", label: "要求到货期限", format: formatDate },
@@ -78,24 +78,34 @@
     },
     quality: {
       title: "产品质量管理",
-      description: "维护产品质量档案，关联实物标签与生产批次信息。",
-      kicker: "质量档案 · 工作表",
-      tableTitle: "产品质量档案",
-      hint: "可上传产品实物标签，并在生产详情中补充批次记录。",
-      searchPlaceholder: "搜索产品名称或负责人",
-      statusKey: "qualityStatus",
+      description: "集中管理产品检测资料与生产批次质量追溯信息。",
+      kicker: "产品质量追溯 · 工作表",
+      tableTitle: "产品质量追溯记录",
+      hint: "按生产批次维护产品、原材料、检测结果与实物标签信息。",
+      searchPlaceholder: "请输入产品生产批次",
+      dateKey: "productionTime",
+      statusKey: "inspectionResult",
+      emptyTitle: "暂无质量追溯记录",
+      emptyHint: "新增追溯记录后，相关生产与检测信息将在此统一管理",
+      showActions: false,
       fields: [
+        { key: "productionBatch", label: "产品生产批次", required: true, placeholder: "请输入产品生产批次" },
+        { key: "machineShift", label: "机台班次", required: true, placeholder: "例如：2 号机 · 早班" },
         { key: "productName", label: "产品名称", required: true, placeholder: "请输入产品名称" },
-        { key: "owner", label: "生产负责人", required: true, placeholder: "请输入负责人" },
-        { key: "qualityStatus", label: "质检状态", type: "select", required: true, options: ["待检", "检验中", "合格", "不合格"] },
-        { key: "physicalLabel", label: "产品实物标签", type: "image", full: true },
+        { key: "materialBatch", label: "原材料批次", required: true, placeholder: "请输入原材料批次" },
+        { key: "productionTime", label: "产品生产时间", type: "datetime-local", required: true },
+        { key: "inspectionResult", label: "检测结果", type: "select", required: true, options: ["待检", "检验中", "合格", "不合格"] },
+        { key: "inspector", label: "检验员", required: true, placeholder: "请输入检验员姓名" },
+        { key: "physicalLabel", label: "实物标签", type: "image", full: true },
       ],
       columns: [
+        { key: "machineShift", label: "机台班次" },
         { key: "productName", label: "产品名称" },
-        { key: "details", label: "生产详情", action: "qualityDetails" },
-        { key: "physicalLabel", label: "产品实物标签", image: true },
-        { key: "owner", label: "生产负责人" },
-        { key: "qualityStatus", label: "质检状态", status: true },
+        { key: "materialBatch", label: "原材料批次" },
+        { key: "productionTime", label: "产品生产时间", format: formatDateTime },
+        { key: "inspectionResult", label: "检测结果", status: true },
+        { key: "inspector", label: "检验员" },
+        { key: "physicalLabel", label: "实物标签", image: true },
       ],
     },
   };
@@ -111,24 +121,24 @@
     sortDirection: "none",
     editingId: null,
     imageData: "",
-    detailRecordId: null,
     confirmAction: null,
   };
 
   const el = Object.fromEntries(
     [
       "breadcrumbCurrent", "pageTitle", "pageDescription", "sectionKicker", "tableTitle", "tableHint",
-      "procurementSwitcher", "categoryRow", "searchInput", "searchButton", "filterButton", "sortButton",
+      "procurementSwitcher", "qualitySwitcher", "workspaceCard", "categoryRow", "searchBox", "searchPrefix",
+      "searchInput", "searchButton", "toolbarActions", "filterButton", "sortButton",
       "resetButton", "filterPanel", "statusFilter", "dateFrom", "dateTo", "clearFilters", "tableHead",
       "tableBody", "recordCount", "addRecord", "recordModal", "modalKicker", "modalTitle", "recordForm",
-      "formFields", "detailModal", "detailTitle", "batchBody", "batchForm", "addBatch", "saveBatch",
+      "formFields",
       "confirmPopover", "confirmTitle", "confirmText", "cancelConfirm", "acceptConfirm", "toastRegion",
       "userMenu", "accountPopover", "mainNav",
     ].map((id) => [id, document.getElementById(id)])
   );
 
   function storageKey(page) {
-    return `${STORAGE_PREFIX}${page}`;
+    return `${STORAGE_PREFIX}${page === "quality" ? "quality-trace-v2" : page}`;
   }
 
   function loadRecords(page) {
@@ -162,6 +172,12 @@
     if (!value) return "—";
     const [year, month, day] = value.split("-");
     return year && month && day ? `${year}.${month}.${day}` : escapeHtml(value);
+  }
+
+  function formatDateTime(value) {
+    if (!value) return "—";
+    const [date, time = ""] = value.split("T");
+    return `${formatDate(date)}${time ? ` ${escapeHtml(time.slice(0, 5))}` : ""}`;
   }
 
   function nowId() {
@@ -198,6 +214,12 @@
     el.searchInput.placeholder = config.searchPlaceholder;
     el.categoryRow.hidden = !config.categories;
     el.procurementSwitcher.hidden = page !== "procurement";
+    el.qualitySwitcher.hidden = page !== "quality";
+    el.workspaceCard.hidden = page === "quality";
+    el.searchPrefix.hidden = page !== "quality";
+    el.searchBox.classList.toggle("batch-search", page === "quality");
+    el.toolbarActions.hidden = page === "quality";
+    el.searchButton.textContent = page === "quality" ? "查询" : "检索";
     el.sortButton.innerHTML = `<svg><use href="#i-sort"></use></svg>${config.dateKey ? "交付日期排序" : "默认排序"}`;
     el.sortButton.disabled = !config.dateKey;
     buildStatusOptions();
@@ -216,7 +238,9 @@
     const query = state.search.trim().toLowerCase();
 
     if (query) {
-      records = records.filter((record) => Object.values(record).some((value) => typeof value === "string" && value.toLowerCase().includes(query)));
+      records = state.page === "quality"
+        ? records.filter((record) => String(record.productionBatch || "").toLowerCase().includes(query))
+        : records.filter((record) => Object.values(record).some((value) => typeof value === "string" && value.toLowerCase().includes(query)));
     }
     if (state.status && config.statusKey) {
       records = records.filter((record) => record[config.statusKey] === state.status);
@@ -243,16 +267,17 @@
   function renderTable() {
     const config = currentConfig();
     const records = getVisibleRecords();
-    el.tableHead.innerHTML = `<tr>${config.columns.map((column) => `<th>${escapeHtml(column.label)}</th>`).join("")}<th>操作</th></tr>`;
+    const actionHeader = config.showActions === false ? "" : "<th>操作</th>";
+    el.tableHead.innerHTML = `<tr>${config.columns.map((column) => `<th>${escapeHtml(column.label)}</th>`).join("")}${actionHeader}</tr>`;
 
     if (!records.length) {
       const filtering = state.search || state.status || state.dateFrom || state.dateTo || (config.categories && state.category !== "柠檬酸");
       el.tableBody.innerHTML = `
-        <tr class="empty-row"><td colspan="${config.columns.length + 1}">
+        <tr class="empty-row"><td colspan="${config.columns.length + (config.showActions === false ? 0 : 1)}">
           <div class="empty-state">
             <svg><use href="#i-empty"></use></svg>
-            <strong>${filtering ? "没有找到符合条件的记录" : "暂无计划数据"}</strong>
-            <span>${filtering ? "请调整搜索或筛选条件后重试" : "新增计划后，相关业务记录将在此统一管理"}</span>
+            <strong>${filtering ? "没有找到符合条件的记录" : (config.emptyTitle || "暂无计划数据")}</strong>
+            <span>${filtering ? "请调整搜索或筛选条件后重试" : (config.emptyHint || "新增计划后，相关业务记录将在此统一管理")}</span>
             <button class="btn" type="button" data-empty-add><svg><use href="#i-plus"></use></svg>新增第一条记录</button>
           </div>
         </td></tr>`;
@@ -271,13 +296,10 @@
         return `<td><span class="status-pill ${statusClass}">${escapeHtml(raw || "未设置")}</span></td>`;
       }
       if (column.image) {
-        return `<td>${raw ? `<img class="label-preview" src="${escapeHtml(raw)}" alt="产品实物标签" />` : `<span class="status-pill">未上传</span>`}</td>`;
+        return `<td>${raw ? `<img class="label-preview" src="${escapeHtml(raw)}" alt="实物标签" />` : `<span class="status-pill">未上传</span>`}</td>`;
       }
       if (column.action === "details") {
         return `<td><button class="row-action" type="button" data-row-action="details" data-id="${record.id}">查看详情</button></td>`;
-      }
-      if (column.action === "qualityDetails") {
-        return `<td><button class="row-action" type="button" data-row-action="quality-details" data-id="${record.id}">生产详情</button></td>`;
       }
       if (column.action === "favorite") {
         return `<td><button class="row-action ${record.favorite ? "starred" : ""}" type="button" data-row-action="favorite" data-id="${record.id}" aria-label="${record.favorite ? "取消收藏" : "收藏"}"><svg><use href="#i-star"></use></svg></button></td>`;
@@ -286,7 +308,8 @@
       return `<td>${value}</td>`;
     }).join("");
 
-    return `<tr data-record-id="${record.id}">${cells}<td><div class="action-cell"><button class="row-action" type="button" data-row-action="edit" data-id="${record.id}">编辑</button><button class="row-action more" type="button" data-row-action="more" data-id="${record.id}" aria-label="更多操作"><svg><use href="#i-more"></use></svg></button></div></td></tr>`;
+    const actionCell = config.showActions === false ? "" : `<td><div class="action-cell"><button class="row-action" type="button" data-row-action="edit" data-id="${record.id}">编辑</button><button class="row-action more" type="button" data-row-action="more" data-id="${record.id}" aria-label="更多操作"><svg><use href="#i-more"></use></svg></button></div></td>`;
+    return `<tr data-record-id="${record.id}">${cells}${actionCell}</tr>`;
   }
 
   function openRecordModal(record = null) {
@@ -318,7 +341,7 @@
     } else if (field.type === "textarea") {
       control = `<textarea name="${field.key}" rows="3" ${required} ${attrs}>${escapeHtml(value)}</textarea>`;
     } else if (field.type === "image") {
-      control = `<label class="upload-field" id="uploadField">${value ? `<img class="upload-preview" src="${escapeHtml(value)}" alt="标签预览" />` : `<svg><use href="#i-upload"></use></svg><span>点击选择产品实物标签图片<br><small>支持 PNG、JPG、WebP 格式</small></span>`}<input name="${field.key}" type="file" accept="image/png,image/jpeg,image/webp" /></label>`;
+      control = `<label class="upload-field" id="uploadField">${value ? `<img class="upload-preview" src="${escapeHtml(value)}" alt="标签预览" />` : `<svg><use href="#i-upload"></use></svg><span>点击选择实物标签图片<br><small>支持 PNG、JPG、WebP 格式</small></span>`}<input name="${field.key}" type="file" accept="image/png,image/jpeg,image/webp" /></label>`;
     } else {
       control = `<input name="${field.key}" type="${field.type || "text"}" value="${escapeHtml(value)}" ${required} ${attrs} />`;
     }
@@ -376,7 +399,7 @@
       if (index >= 0) records[index] = { ...records[index], ...record, updatedAt: new Date().toISOString() };
       showToast("记录已更新");
     } else {
-      records.unshift({ id: nowId(), ...record, batches: [], favorite: false, createdAt: new Date().toISOString() });
+      records.unshift({ id: nowId(), ...record, favorite: false, createdAt: new Date().toISOString() });
       showToast("记录已添加到工作表");
     }
     saveRecords(state.page);
@@ -428,47 +451,6 @@
     }
     el.confirmPopover.hidden = true;
     state.confirmAction = null;
-  }
-
-  function openQualityDetails(record) {
-    state.detailRecordId = record.id;
-    el.detailTitle.textContent = `${record.productName} · 生产详情`;
-    el.detailModal.hidden = false;
-    el.batchForm.hidden = true;
-    document.body.style.overflow = "hidden";
-    renderBatches();
-  }
-
-  function renderBatches() {
-    const record = state.records.quality.find((item) => item.id === state.detailRecordId);
-    const batches = record?.batches || [];
-    el.batchBody.innerHTML = batches.length
-      ? batches.map((batch) => `<tr><td>${escapeHtml(batch.productionTime?.replace("T", " ") || "—")}</td><td>${escapeHtml(batch.batchNo || "—")}</td><td>${escapeHtml(batch.machineShift || "—")}</td><td>${escapeHtml(batch.materialBatch || "—")}</td><td><button class="row-action" type="button" data-delete-batch="${batch.id}">删除</button></td></tr>`).join("")
-      : `<tr class="empty-row"><td colspan="5"><div class="empty-state"><strong>暂无生产批次</strong><span>点击“添加批次”录入生产与原材料信息</span></div></td></tr>`;
-  }
-
-  function closeDetailModal() {
-    el.detailModal.hidden = true;
-    el.batchForm.hidden = true;
-    state.detailRecordId = null;
-    document.body.style.overflow = "";
-  }
-
-  function saveBatch() {
-    const inputs = Object.fromEntries([...el.batchForm.querySelectorAll("input")].map((input) => [input.name, input.value.trim()]));
-    if (!inputs.productionTime || !inputs.batchNo) {
-      showToast("请至少填写生产时间和生产批次", "info");
-      return;
-    }
-    const record = state.records.quality.find((item) => item.id === state.detailRecordId);
-    if (!record) return;
-    record.batches ||= [];
-    record.batches.push({ id: nowId(), ...inputs });
-    saveRecords("quality");
-    el.batchForm.querySelectorAll("input").forEach((input) => { input.value = ""; });
-    el.batchForm.hidden = true;
-    renderBatches();
-    showToast("生产批次已添加");
   }
 
   function showToast(message, type = "success") {
@@ -573,7 +555,6 @@
       if (action === "edit") openRecordModal(record);
       if (action === "more") openMoreMenu(button, record.id);
       if (action === "details") showToast(`${record.productName} 的计划详情已载入`, "info");
-      if (action === "quality-details") openQualityDetails(record);
       if (action === "favorite") {
         record.favorite = !record.favorite;
         saveRecords(state.page);
@@ -622,28 +603,21 @@
       el.procurementSwitcher.querySelectorAll("button").forEach((item) => item.classList.toggle("selected", item === button));
     });
 
-    document.querySelectorAll("[data-close-detail]").forEach((button) => button.addEventListener("click", closeDetailModal));
-    el.detailModal.addEventListener("click", (event) => { if (event.target === el.detailModal) closeDetailModal(); });
-    el.addBatch.addEventListener("click", () => {
-      el.batchForm.hidden = !el.batchForm.hidden;
-      if (!el.batchForm.hidden) el.batchForm.querySelector("input")?.focus();
-    });
-    el.saveBatch.addEventListener("click", saveBatch);
-    el.batchBody.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-delete-batch]");
+    el.qualitySwitcher.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-quality-type]");
       if (!button) return;
-      const record = state.records.quality.find((item) => item.id === state.detailRecordId);
-      if (!record) return;
-      record.batches = (record.batches || []).filter((batch) => batch.id !== button.dataset.deleteBatch);
-      saveRecords("quality");
-      renderBatches();
-      showToast("生产批次已删除");
+      if (button.dataset.qualityType === "report") {
+        showToast("当前暂无可查看的产品检测报告", "info");
+        return;
+      }
+      el.qualitySwitcher.querySelectorAll("button").forEach((item) => item.classList.toggle("selected", item === button));
+      el.workspaceCard.hidden = false;
+      renderTable();
     });
 
     document.addEventListener("keydown", (event) => {
       if (event.key !== "Escape") return;
       if (!el.recordModal.hidden) closeRecordModal();
-      else if (!el.detailModal.hidden) closeDetailModal();
       else if (!el.confirmPopover.hidden) { el.confirmPopover.hidden = true; state.confirmAction = null; }
       else if (!el.accountPopover.hidden) { el.accountPopover.hidden = true; el.userMenu.setAttribute("aria-expanded", "false"); }
     });
